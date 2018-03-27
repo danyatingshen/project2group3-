@@ -1,0 +1,48 @@
+---
+title: "pre presentation Amanda’s part"
+author: "Amanda Shen"
+date: "2018/3/27"
+output: html_document
+---
+```{r,message=FALSE,echo=FALSE}
+library(tidyverse)
+library(mosaic)
+library(ggplot2)
+library(readxl)
+death <- read_excel("~/Desktop/death.xlsx")
+owningship <- read_excel("~/Desktop/owningship.xlsx")
+```
+replace n/a to 0
+```{r,echo=FALSE}
+owningship$`2002.0`[is.na(owningship$`2002.0`)]=0
+owningship$`2003.0`[is.na(owningship$`2003.0`)]=0
+owningship$`2004.0`[is.na(owningship$`2004.0`)]=0
+owningship$`2005.0`[is.na(owningship$`2005.0`)]=0
+owningship$`2006.0`[is.na(owningship$`2006.0`)]=0
+owningship$`2007.0`[is.na(owningship$`2007.0`)]=0
+names(owningship)
+```
+
+```{r,fig.height=10}
+avgdata <- owningship %>% rename(country=`Motor vehicles (not 2-wheelers) per 1,000 population`)%>%group_by(country)%>% mutate(avg =mean (`2002.0`:`2007.0`)) 
+data1 <- avgdata %>% arrange(desc(avg))%>%head(5)
+data1
+```
+
+```{r,fig.width=8,echo=FALSE}
+library(ggplot2)
+highavg <- ggplot(aes(x=country,y=avg),data = data1)+geom_bar(stat = "identity",aes(fill= country))
+highavg
+```
+
+
+
+
+
+
+
+
+
+
+
+
